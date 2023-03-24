@@ -1,0 +1,40 @@
+{%extends "index.html"%}
+{%block encabezado%}
+    {%include "encabezado.html"%}
+{%endblock%}
+
+{%block menu%}
+    {%include "menu.html"%}
+{%endblock%}
+
+{%block contenido%}
+<section>
+    <form action="/agregarCliente" method="post" class="w-50" style="margin: 0 auto">
+        <h3 class="text-center fw-bold">REGISTRAR CLIENTES</h3>
+        <div>
+            <label for="txtIdentificacion">Identificacion del cliente</label>
+            <input type="number" name="txtIdentificacion" id="txtIdentificacion" class="form-control">
+        </div>
+        <div>
+            <label for="txtNombre">Nombre del cliente</label>
+            <input type="text" name="txtNombre" id="txtNombre" class="form-control">
+        </div>
+        <div>
+            <label for="txtDireccion">Direccion del cliente</label>
+            <input type="text" name="txtDireccion" id="txtDireccion" class="form-control">
+        </div>
+        <div>
+            <label for="txtCorreo">Correo del cliente</label>
+            <input type="email" name="txtCorreo" id="txtCorreo" class="form-control">
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success">Agregar</button>
+        </div>
+    </form>
+        <div id="mensaje" class="text-center">{{mensaje}}</div>
+</section>
+{%endblock%}
+
+{%block footer%}
+    {%include "footer.html"%}
+{%endblock%}

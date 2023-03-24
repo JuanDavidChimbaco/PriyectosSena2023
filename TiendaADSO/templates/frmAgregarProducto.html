@@ -1,0 +1,36 @@
+{%extends "index.html"%}
+{%block encabezado%}
+    {%include "encabezado.html"%}
+{%endblock%}
+
+{%block menu%}
+    {%include "menu.html"%}
+{%endblock%}
+
+{%block contenido%}
+<section>
+    <form action="/agregarProducto" method="post" class="w-50" style="margin: 0 auto">
+        <h3 class="text-center fw-bold">REGISTRAR PRODUCTO</h3>
+        <div>
+            <label for="txtCodigo">Código del Producto</label>
+            <input type="number" name="txtCodigo" id="txtCodigo" class="form-control" required>
+        </div>
+        <div>
+            <label for="txtNombre">Nombre del Producto</label>
+            <input type="text" name="txtNombre" id="txtNombre" class="form-control" required>
+        </div>
+        <div>
+            <label for="txtPrecio">Precio del Producto</label>
+            <input type="number" name="txtPrecio" id="txtPrecio" class="form-control" required>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success">Agregar</button>
+        </div>
+    </form>
+    <div id="mensaje" class="text-center">{{mensaje}}</div>
+</section>
+{%endblock%}
+
+{%block piePagina%}
+    {%include "piePagina.html"%}
+{%endblock%}

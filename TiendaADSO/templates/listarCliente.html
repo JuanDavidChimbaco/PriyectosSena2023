@@ -1,0 +1,38 @@
+{% extends "index.html" %}
+
+{% block encabezado %}
+    {% include "encabezado.html" %}
+{% endblock %}
+
+{% block menu %}
+    {% include "menu.html" %}
+{% endblock %}
+
+{% block contenido %}
+    <h3 class="text-center"> LISTA CLIENTES</h3>
+    <table class="table table-bordered w-75" style="margin: 0 auto;">
+        <thead class="text-center text-white bg-dark">
+            <tr>
+                <th scope="col">Identificacion</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Correo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in listaClientes %}
+            <tr class="">
+                <td>{{c.getIdentificacion()}}</td>
+                <td>{{c.getNombre()}}</td>
+                <td>{{c.getDireccion()}}</td>
+                <td>{{c.getCorreo()}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<div id="mensaje" class="text-center">{{mensaje}}</div>
+{% endblock %}
+
+{% block footer %}
+    {% include "footer.html" %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{%extends "index.html"%}
+{%block encabezado%}
+{%include "encabezado.html"%}
+{%endblock%}
+
+{%block menu%}
+{%include "menu.html"%}
+{%endblock%}
+
+{%block contenido%}
+<section>
+    <h3 class="text-center">LISTA DE PRODUCTOS DE LA TIENDA</h3>
+    <table class="table table-bordered w-75" style="margin: 0 auto">
+        <thead class="text-center text-white bg-dark">
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in listaProductos %}
+            <tr>
+                <td>{{p.getCodigo()}}</td>
+                <td>{{p.getNombre()}}</td>
+                <td>{{p.getPrecio()}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="mensaje" class="text-center">{{mensaje}}</div>
+</section>
+{%endblock%}
+
+{%block piePagina%}
+{%include "piePagina.html"%}
+{%endblock%}

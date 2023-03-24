@@ -1,0 +1,65 @@
+{%extends "index.html"%}
+{%block encabezado%}
+    {%include "encabezado.html"%}
+{%endblock%}
+
+{%block menu%}
+    {%include "menu.html"%}
+{%endblock%}
+
+{%block contenido%}
+<section>
+    <h3 class="text-center">COMPRA EN LINEA</h3>
+    <div id="bloqueCliente" class="d-flex justify-content-center">
+        <label for="txtIdentificacion" class="mx-3 form-control text-center">Identificacion Cliente: </label>
+        <input type="text" id="txtIdentificacionCliente" name="txtIdentificacion" class="form-control">
+        <button type="button" id="btnConsultarCliente" class="btn btn-success text-center mx-3">Consultar</button>
+    </div>
+    <br>
+    <div id="bloqueProducto" class="d-flex justify-content-center row">
+        <div class="form-control px-5 w-75 ">
+            <label for="txtCodigo"> Codigo del Producto</label>
+            <input type="number" id="txtCodigoProducto" name="txtCodigo" class="form-control">
+        </div>
+        <div class="form-control px-5 w-75">
+            <label for="txtCantidad"> Cantidad del Producto</label>
+            <input type="number" id="txtCantidadProducto" name="txtCantidad" class="form-control">
+        </div>
+        <div class="form-control px-5 w-75">
+            <label for="txtNombre"> Nombre del Producto</label>
+        <input type="text" id="txtNombreProducto" name="txtNombre" class="form-control">
+        </div>
+        <div class="d-flex justify-content-center pt-3">
+            <button type="button" id="btnAgregarDetalle" class="btn btn-success text-center">Agregar Detalle </button>
+        </div>
+        
+    </div>
+    <br>
+    <div id="lista-detalle">
+        <table class="table table-bordered w-75" style="margin: 0 auto">
+            <thead class="text-center text-white bg-dark ">
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Precio Unitario</th>
+                    <th>Cantidad</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody id="datosTabla">
+                
+            </tbody>
+        </table>
+    </div>
+
+    <div id="mensaje" class="text-center bg-danger rounded">{{mensaje}}</div>
+</section>
+<script>
+    obtenerListaProductos();
+    obtenerListaClientes();
+</script>
+{%endblock%}
+
+{%block piePagina%}
+    {%include "piePagina.html"%}
+{%endblock%}
