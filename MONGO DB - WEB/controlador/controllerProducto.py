@@ -12,13 +12,12 @@ def inicio():
     print(type(listaProductos))
     return render_template("listarProductos.html",
                            listaProductos=listaProductos)
-
     
 @app.route('/vistaAgregarProducto')
 def vistaAgregarProducto():
     producto={}
     return render_template("frmAgregarProducto.html",producto=producto)
-           
+
 @app.route('/agregarProducto',methods=['POST'])
 def agregarProducto():
     try:
@@ -27,7 +26,6 @@ def agregarProducto():
         categoria = request.form['cbCategoria']
         precio = int(request.form['txtPrecio'])
         
-        # datos de la imagen
         archivo = request.files["fileFoto"]
         extencion = ""
         if archivo:
@@ -52,24 +50,17 @@ def agregarProducto():
         else:
             resultado = productos.insert_one(producto)
             mensaje="Producto agregado correctamente."
-            print(extencion)
-            #obtener el id del producto que se acaba de insertar
             idProducto = resultado.inserted_id
-            #nuevoNombre = (f"{idProducto}.{extencion}")
             nuevoNombre = str(idProducto)+ "." + str(extencion)
-            print(nuevoNombre)
             folder = app.config['UPLOAD_FOLDER']
-            print(folder)
             path = os.path.join(folder,nuevoNombre)
-            print(path)
             archivo.save(path)
-            
             listaProductos=listarProductos()
             return render_template("listarProductos.html",
                                mensajeAgregar=mensaje,
                                listaProductos=listaProductos)
             
-    except Exception as error:
+    except pymongo.errors as error:
         traceback.print_exc()
         mensaje= str(error)
         return render_template('frmAgregarProducto.html', producto=producto, mensaje=mensaje)
@@ -95,6 +86,7 @@ def vistaActualizarProducto(codigo):
         if (producto):
             print(producto)
             mensaje="producto encontrado"
+            
             return render_template('frmActualizarProducto.html', producto=producto, mensajeActualizar=mensaje)
         else:
             mensaje="producto No encontrado"
@@ -111,7 +103,16 @@ def actualizarProducto():
         nombre = request.form['txtNombre']
         categoria = request.form['cbCategoria']
         precio = int(request.form['txtPrecio'])
-        
+        idProducto = request.form['idProducto']
+        archivo = request.files["fileFoto"]
+        extencion = ""
+        if archivo:
+            nombreArchivo = secure_filename(archivo.filename)
+            listaNombreArchivo = nombreArchivo.split('.')
+            extencion = listaNombreArchivo[1].lower()
+        else:
+            print("No imagen")
+                
         datosActualizar = {
             "codigo": codigo,
             "nombre": nombre,
@@ -124,6 +125,11 @@ def actualizarProducto():
         if (resultado):
             print(resultado)
             mensaje="Producto actualizado."
+            print(idProducto)
+            nuevoNombre = str(idProducto)+ "." + str(extencion)
+            folder = app.config['UPLOAD_FOLDER']
+            path = os.path.join(folder,nuevoNombre)
+            archivo.save(path)
             listaProductos=listarProductos()
             return render_template("listarProductos.html",
                                 mensajeActualizar=mensaje,
@@ -134,7 +140,7 @@ def actualizarProducto():
             return render_template("listarProductos.html",
                                 mensajeActualizar=mensaje,
                                 listaProductos=listaProductos)
-        
+             
     except pymongo.errors as error:
         traceback.print_exc()
         mensaje = str(error)

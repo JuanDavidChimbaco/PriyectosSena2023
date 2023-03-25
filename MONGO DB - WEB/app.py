@@ -3,6 +3,7 @@ import pymongo
 import os
 
 
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER']= './static/img'
 
@@ -14,6 +15,7 @@ baseDatos = miConexion["GESTIONPRODUCTOS"]
 print(type(baseDatos))
 
 #crear objeto que permite acceder a la coleccion productos
+
 productos = baseDatos["PRODUCTOS"]
 print(type(productos))
 
