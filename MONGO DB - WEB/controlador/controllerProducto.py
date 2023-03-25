@@ -2,6 +2,9 @@ from app import app,productos
 from flask import Flask, request,render_template,redirect
 import pymongo
 import traceback
+from werkzeug.utils import secure_filename
+import os
+from bson.objectid import ObjectId
 
 @app.route('/')
 def inicio():
@@ -9,12 +12,13 @@ def inicio():
     print(type(listaProductos))
     return render_template("listarProductos.html",
                            listaProductos=listaProductos)
+
     
 @app.route('/vistaAgregarProducto')
 def vistaAgregarProducto():
     producto={}
     return render_template("frmAgregarProducto.html",producto=producto)
-
+           
 @app.route('/agregarProducto',methods=['POST'])
 def agregarProducto():
     try:
@@ -22,6 +26,16 @@ def agregarProducto():
         nombre = request.form['txtNombre']
         categoria = request.form['cbCategoria']
         precio = int(request.form['txtPrecio'])
+        
+        # datos de la imagen
+        archivo = request.files["fileFoto"]
+        extencion = ""
+        if archivo:
+            nombreArchivo = secure_filename(archivo.filename)
+            listaNombreArchivo = nombreArchivo.split('.')
+            extencion = listaNombreArchivo[1].lower()
+        else:
+            print("No imagen")
         
         producto = {
             "codigo": codigo,
@@ -38,12 +52,24 @@ def agregarProducto():
         else:
             resultado = productos.insert_one(producto)
             mensaje="Producto agregado correctamente."
+            print(extencion)
+            #obtener el id del producto que se acaba de insertar
+            idProducto = resultado.inserted_id
+            #nuevoNombre = (f"{idProducto}.{extencion}")
+            nuevoNombre = str(idProducto)+ "." + str(extencion)
+            print(nuevoNombre)
+            folder = app.config['UPLOAD_FOLDER']
+            print(folder)
+            path = os.path.join(folder,nuevoNombre)
+            print(path)
+            archivo.save(path)
+            
             listaProductos=listarProductos()
             return render_template("listarProductos.html",
                                mensajeAgregar=mensaje,
                                listaProductos=listaProductos)
             
-    except pymongo.errors as error:
+    except Exception as error:
         traceback.print_exc()
         mensaje= str(error)
         return render_template('frmAgregarProducto.html', producto=producto, mensaje=mensaje)

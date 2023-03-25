@@ -4,6 +4,7 @@ import os
 
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER']= './static/img'
 
 #se crea objeto conexion al servidor mongodb
 miConexion = pymongo.MongoClient('mongodb://localhost:27017')
@@ -13,7 +14,6 @@ baseDatos = miConexion["GESTIONPRODUCTOS"]
 print(type(baseDatos))
 
 #crear objeto que permite acceder a la coleccion productos
-
 productos = baseDatos["PRODUCTOS"]
 print(type(productos))
 

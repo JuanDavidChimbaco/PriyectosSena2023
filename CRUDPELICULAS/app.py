@@ -21,7 +21,6 @@ def inicio():
     listaGeneros = listarGeneros()
     return render_template("frmAgregarPeliculas.html", listaPeliculas = listaPeliculas, listaGeneros = listaGeneros)
 
-
     file = file.split('.')
     if file[1] in ALLOWED_EXTENSIONS:
         return True

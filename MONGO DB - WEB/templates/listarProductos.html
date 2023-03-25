@@ -11,6 +11,7 @@
                 <th>Nombre</th>
                 <th>Precio</th>
                 <th>Categoria</th>
+                <th>Foto</th>
                 <th>Acción</th>
             </tr>
         </thead>
@@ -21,6 +22,9 @@
                 <td>{{producto["nombre"]}}</td>
                 <td>{{producto["precio"]}}</td>
                 <td>{{producto["categoria"]}}</td>
+                <td class="text-center">
+                    <img src="/static/img/{{producto['_id']}}.jpg" width="50" height="50" alt="{{producto['nombre']}}">
+                </td>
                 <td class="text-center">
                     <a href="/vistaActualizarProducto/{{producto['codigo']}}" class="text-decoration-none">
                         <i class="fa fa-edit text-warning"></i>
