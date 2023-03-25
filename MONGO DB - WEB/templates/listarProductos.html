@@ -1,0 +1,62 @@
+{% extends 'index.html' %}
+{% block encabezado %}
+{% include 'encabezado.html' %}
+{% endblock %}
+{%block contenido %}
+<div class="w-100 mb-3">
+    <table class="table table-dark table-hover">
+        <thead class="table-active">
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Categoria</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody class="tab-content">
+            {%for producto in listaProductos%}
+            <tr>
+                <td>{{producto["codigo"]}}</td>
+                <td>{{producto["nombre"]}}</td>
+                <td>{{producto["precio"]}}</td>
+                <td>{{producto["categoria"]}}</td>
+                <td class="text-center">
+                    <a href="/vistaActualizarProducto/{{producto['codigo']}}" class="text-decoration-none">
+                        <i class="fa fa-edit text-warning"></i>
+                    </a>
+                    <a href="/eliminar/{{producto['codigo']}}">
+                        <i class="fa fa-trash text-danger"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="row text-center">
+        <div class="col-12">
+            <a href="/vistaAgregarProducto">
+                <button value="Agregar" class="btn btn-success"> Agregar Producto</button>
+            </a>
+        </div>
+    </div>
+</div>
+{%if mensajeAgregar%}
+<script>
+    Swal.fire('Agregar Producto', '{{mensaje}}', 'success');
+</script>
+{%endif%}
+{%if mensajeEliminar%}
+<script>
+    Swal.fire('Eliminar Producto', '{{mensajeEliminar}}', 'success');
+</script>
+{%endif%}
+{%if mensajeActualizar%}
+<script>
+    Swal.fire('Actualizar Producto', '{{mensajeActualizar}}', 'success');
+</script>
+{%endif%}
+{% endblock %}
+{%block piePagina%}
+{%include "piePagina.html" %}
+{%endblock%}

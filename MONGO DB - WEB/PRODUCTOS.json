@@ -1,0 +1,17 @@
+[{
+  "_id": {
+    "$oid": "641c76d92d9743593c0d1baa"
+  },
+  "codigo": 1,
+  "nombre": "TV",
+  "categoria": "Electrodomestico",
+  "precio": 250000
+},{
+  "_id": {
+    "$oid": "641c7b76bf185f41857f4e0c"
+  },
+  "codigo": 20,
+  "nombre": "Lavadora",
+  "categoria": "Electrodomestico",
+  "precio": 1000000
+}]

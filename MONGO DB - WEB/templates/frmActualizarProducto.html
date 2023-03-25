@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+{% block encabezado %}
+    {% include 'encabezado.html' %}
+{% endblock  %}
+{%block contenido %}
+    <div class="w-25 pb-3">
+        <form action="/actualizarProducto" method="post" enctype="multipart/form-data" class="was-validated">
+            <div class="mb-3">
+                <label for="txtCodigo">Codigo:</label>
+                <input type="number" name="txtCodigo" id="txtCodigo" value="{{producto['codigo']}}"  class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="txtNombre">nombre:</label>
+                <input type="text" name="txtNombre" id="txtNombre" value="{{producto['nombre']}}" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="txtPrecio">Precio:</label>
+                <input type="number" name="txtPrecio" id="txtPrecio" value="{{producto['precio']}}" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="cbCategoria">Categoria:</label>
+                <select name="cbCategoria" id="cbCategoria"  class="form-control">
+                    <option value="">Selecione Categoria</option>
+                    <option value="electrodomésticos">electrodomésticos</option>
+                    <option value="ropa">ropa</option>
+                    <option value="accesorios">accesorios</option>
+                </select>
+            </div>
+            <div class="text-center">
+                <input type="submit" value="Actualizar" class="btn btn-success">
+            </div>
+        </form>
+        <div>
+            {%if mensajeActualizar%}
+            <script>
+                Swal.fire('Actualizar Producto','{{mensajeActualizar}}','info');
+                document.getElementById('cbCategoria').value = `{{producto['categoria']}}`
+            </script>
+            {%endif%}
+        </div>
+    </div>
+{% endblock %}
+{%block piePagina%}
+    {%include 'piePagina.html'%}
+{%endblock%}

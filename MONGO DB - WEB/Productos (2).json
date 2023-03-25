@@ -1,0 +1,62 @@
+[
+  {
+    "codigo": 1001,
+    "nombre": "Camiseta",
+    "categoria": "ropa",
+    "precio": 15
+  },
+  {
+    "codigo": 1002,
+    "nombre": "Pantalón",
+    "categoria": "ropa",
+    "precio": 25
+  },
+  {
+    "codigo": 1003,
+    "nombre": "Zapatos",
+    "categoria": "accesorios",
+    "precio": 35
+  },
+  {
+    "codigo": 1004,
+    "nombre": "Bolso",
+    "categoria": "accesorios",
+    "precio": 45
+  },
+  {
+    "codigo": 1005,
+    "nombre": "Refrigerador",
+    "categoria": "electrodomésticos",
+    "precio": 500
+  },
+  {
+    "codigo": 1006,
+    "nombre": "Lavadora",
+    "categoria": "electrodomésticos",
+    "precio": 700
+  },
+  {
+    "codigo": 1007,
+    "nombre": "Abrigo",
+    "categoria": "ropa",
+    "precio": 60
+  },
+  {
+    "codigo": 1008,
+    "nombre": "Reloj",
+    "categoria": "accesorios",
+    "precio": 100
+  },
+  {
+    "codigo": 1009,
+    "nombre": "Secadora",
+    "categoria": "electrodomésticos",
+    "precio": 800
+  },
+  {
+    "codigo": 1010,
+    "nombre": "Camisa",
+    "categoria": "ropa",
+    "precio": 20
+  }
+]
