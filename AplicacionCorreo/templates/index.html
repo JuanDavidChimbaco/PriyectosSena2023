@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="shortcut icon" href="https://www.flaticon.com/free-icon/email_3178283?term=mail&page=1&position=32&origin=search&related_id=3178283"> -->
+    <link rel="shortcut icon" href="/img/email.png">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Email</title>
+</head>
+<body>
+    <div class="container" >
+        <div class="row text-center" >
+            <h1>
+                Enviar Correo
+            </h1>
+        </div>
+
+        <div class="row text-center d-flex justify-content-center">
+            <div class="w-25">
+                <form action="/enviarCorreo" class="shadow p-3 mb-5 bg-body-tertiary rounded" method="post" enctype="multipart/form-data">
+                    <div class="form-control">
+                        <label for="txtDestinatario" class="form-label">Para:</label>
+                        <input type="text" name="txtDestinatario" id="txtDestinatario" class="form-control" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="txtOrigen" class="form-label">De:</label>
+                        <input type="text" name="txtOrigen" id="txtOrigen" class="form-control" required>
+                    </div>
+                    <div class="form-control" class="form-label">
+                        <label for="txtAsunto">Asunto:</label>
+                        <input type="text" name="txtAsunto" id="txtAsunto" class="form-control" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="txtMensaje" class="form-label">Mensaje:</label>
+                        <br>
+                        <textarea name="txtMensaje" id="txtMensaje" cols="30" rows="10" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-control">
+                        <label for="txtAnexo" class="form-label">Anexo:</label>
+                        <input type="file" name="fileAnexo" id="txtAnexo" class="form-control" required>
+                    </div>
+                    <div class="form-control">
+                        <input type="submit" value="Enviar" class="btn btn-success">
+                        <input type="submit" value="Cancelar" class="btn btn-danger">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            {%if mensaje %}
+                <script>
+                    Swal.fire({title:'Enviar Correo', text:'{{mensaje}}' , icon:'success'})
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            location.href="/";
+                        }
+                    })
+                </script>
+            {% endif %}
+        </div>
+
+    </div>
+</body>
+</html>
