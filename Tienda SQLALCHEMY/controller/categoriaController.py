@@ -1,8 +1,8 @@
 from app import app
 from model.categoria import *
 from flask import Flask, render_template, request
-from sqlalchemy import SQLAlchemy
-from sqlalchemy import exc 
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import exc
 
 @app.route('/agregarCategoria', methods=['GET', 'POST'])
 def agregarCategoria():

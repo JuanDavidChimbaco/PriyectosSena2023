@@ -1,0 +1,5 @@
+cd ProyectosSena2023\Tienda SQLALCHEMY\environment\Scripts>
+
+activate.bat
+
+deactivate 

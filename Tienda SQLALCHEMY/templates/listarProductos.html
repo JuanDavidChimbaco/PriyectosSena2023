@@ -21,15 +21,15 @@
                 <td>{{producto.proCodigo}}</td>
                 <td>{{producto.proNombre}}</td>
                 <td>{{producto.proPrecio}}</td>
-                <td>{{producto.proCategoria.catNombre}}</td>
+                <td>{{producto.categoria}}</td>
                 <td class="text-center">
-                    <img src="/images/{{producto.idProducto}}.jpg" width="50" height="50" alt="{{producto.proNombre}}">
+                    <img src="/static/images/{{producto.idProducto}}.jpg" width="50" height="50" alt="{{producto.proNombre}}">
                 </td>
                 <td class="text-center">
-                    <a href="/vistaActualizarProducto/{{producto.proCodigo}}" class="text-decoration-none">
+                    <a href="/consultarProducto/{{producto.idProducto}}" class="text-decoration-none">
                         <i class="fa fa-edit text-warning"></i>
                     </a>
-                    <a onclick="abrirModalEliminar(`{{producto.proCodigo}}`)" class="mx-3" role='button'>
+                    <a onclick="abrirModalEliminar(`{{producto.idProducto}}`)" class="mx-3" role='button'>
                         <i class="fa fa-trash text-danger"></i>
                     </a>
                 </td>

@@ -1,8 +1,9 @@
-from app import db, app
-from flask import Flask
+from app import app , db
+from flask import redirect, Flask
+from flask_sqlalchemy import SQLAlchemy
+
 from model.categoria import *
 from model.producto import *
-from flask_sqlalchemy import SQLAlchemy
 
 # crea las tablas de la base de datos sino existe 
 with app.app_context():
@@ -10,4 +11,4 @@ with app.app_context():
     
 @app.route('/')
 def inicio():
-    return "Se ha creado las tablas de las base de datos"
+    return redirect('/listaProductos')

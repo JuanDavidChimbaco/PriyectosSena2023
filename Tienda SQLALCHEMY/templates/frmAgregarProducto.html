@@ -7,38 +7,38 @@
         <form action="/agregarProducto" method="post" enctype="multipart/form-data" class="was-validated">
             <div class="mb-3">
                 <label for="txtCodigo">Codigo:</label>
-                <input type="number" name="txtCodigo" id="txtCodigo" value="{{producto['codigo']}}" required class="form-control">
+                <input type="number" name="txtCodigo" id="txtCodigo" value="{{producto.proCodigo}}" required class="form-control">
             </div>
             <div class="mb-3">
                 <label for="txtNombre">nombre:</label>
-                <input type="text" name="txtNombre" id="txtNombre" value="{{producto['nombre']}}"required class="form-control">
+                <input type="text" name="txtNombre" id="txtNombre" value="{{producto.proNombre}}"required class="form-control">
             </div>
             <div class="mb-3">
                 <label for="txtPrecio">Precio:</label>
-                <input type="number" name="txtPrecio" id="txtPrecio" value="{{producto['precio']}}"required class="form-control">
+                <input type="number" name="txtPrecio" id="txtPrecio" value="{{producto.proPrecio}}"required class="form-control">
             </div>
             <div class="mb-3">
                 <label for="cbCategoria">Categoria:</label>
                 <select name="cbCategoria" id="cbCategoria" required class="form-control">
                     <option value="">Selecione Categoria</option>
-                    <option value="electrodomésticos">electrodomésticos</option>
-                    <option value="ropa">ropa</option>
-                    <option value="accesorios">accesorios</option>
+                    {% for categoria in listaCategorias %}
+                    <option value="{{categoria.idCategoria}}">{{categoria.catNombre}}</option>
+                {% endfor%}
                 </select>
             </div>
             <div class="mb-3">
                 <label for="fileFoto">Imagenes (jpg)</label>
                 <input type="file" name="fileFoto" id="file_Foto" class="form-control" accept=".jpg">
             </div>
-            <div class="text-center">
+            <div class="text-center mt-3">
                 <input type="submit" value="Agregar" class="btn btn-success">
             </div>
         </form>
         <div>
-            {%if mensajeAgregar%}
+            {%if mensaje%}
             <script>
-                Swal.fire('Agregar Producto','{{mensajeAgregar}}','info');
-                document.getElementById('cbCategoria').value = `{{producto['categoria']}}`
+                Swal.fire('Agregar Producto','{{mensaje}}','info');
+                document.getElementById('cbCategoria').value = `{{producto.proCategoria}}`
             </script>
             {%endif%}
         </div>
