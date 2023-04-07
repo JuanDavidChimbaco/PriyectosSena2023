@@ -1,0 +1,41 @@
+http://127.0.0.1:8080/obtenerCategoriaJson
+
+--------------------------------------------------------------------------
+http://127.0.0.1:8080/agregarCategoriaJson
+{
+    "nombreCategoria": "VEHICULOS" #aqui va la categoria que desea Agregar
+}
+
+--------------------------------------------------------------------------
+http://127.0.0.1:8080/listarProductosJson
+
+--------------------------------------------------------------------------
+http://127.0.0.1:8080/consultarProductoJson
+{
+    "idProducto": 1     #aqui va el id que desea consultar
+}
+
+--------------------------------------------------------------------------
+http://127.0.0.1:8080/agregarProductoJson
+{
+    "codigo": 11,
+    "nombre": "BMW 458CC",              # datos del producto que se va a agregar
+    "precio": 145000,
+    "categoria": 6
+}
+
+--------------------------------------------------------------------------
+http://127.0.0.1:8080/actualizarProductoJson
+{
+    "codigo": 5,
+    "nombre": "BMW 550",
+    "precio": 50000,                    # datos del producto que se va a modificar, pero agregando el id del Producto
+    "categoria": 7,
+    "idProducto": 4
+}
+
+--------------------------------------------------------------------------
+http://127.0.0.1:8080/eliminarProductoJson
+{
+    "idProducto": 3                      # id del producto a eliminar
+}

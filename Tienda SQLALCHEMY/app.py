@@ -6,7 +6,8 @@ import sqlite3
 app = Flask(__name__)
 
 # mysql + pymysql : // usuario @ servidor / base de datos
-cadenaConexion = "mysql+pymysql://root@localhost/tiendaorm"
+# cadenaConexion = "mysql+pymysql://root@localhost/tiendaorm"
+cadenaConexion = "sqlite:///basedatos.db"
 app.config['SQLALCHEMY_DATABASE_URI']= cadenaConexion
 app.config['UPLOAD_FOLDER']="./static/images"
 # objeto que representa la base de datos

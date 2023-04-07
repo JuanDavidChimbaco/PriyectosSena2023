@@ -7,7 +7,7 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
 
-
+# =============================================================================
 @app.route('/listaProductos')
 def listarProductos():
     try:
@@ -21,24 +21,11 @@ def listarProductos():
                            listarProductos=listaProductos)
 
 
-@app.route('/api/listarProductos')
-def apilistarProductos():
-    try:
-        listaProductos = Products.query.all()
-        listaJson = []
-        for p in listaProductos:
-            producto = {
-                "idProducto": p.idProducto
-            }
-            listaJson.append(p)
-    except exc.Exe:
-        print('An exception occurred')
-
 @app.route("/vistaAgregarProducto")
 def vistaProducto():
     producto = None
     #obtener las categorias que se muestran en el select del formulario
-    
+
     listaCategorias = Category.query.all()
     return render_template("frmAgregarProducto.html",
                            producto = producto, 
@@ -138,3 +125,104 @@ def eliminarProducto(idProducto):
         mensaje=error
         return render_template("listarProductos.html",
                                mensajeEliminar=mensaje)
+        
+# =================================================================================================
+
+@app.route('/listarProductosJson', methods=['GET'])
+def listarProductosJson():
+    try:
+        listaProductos = Products.query.all()
+        listaJosn=[]
+        for producto in listaProductos:
+            producto = {
+                "idProducto": producto.idProducto,
+                "proCodigo": producto.proCodigo,
+                "proNombre":producto.proNombre,
+                "proPrecio":producto.proPrecio,
+                "categoria": {
+                    "idCategoria": producto.categoria.idCategoria,
+                    "catNombre": producto.categoria.catNombre
+                }
+            }
+            listaJosn.append(producto)
+        mensaje="Lista de Productos"
+    except exc.SQLAlchemyError as error:
+        mensaje=error
+    return {"mensaje":mensaje, "listaProductos":listaJosn}
+
+@app.route('/consultarProductoJson', methods=['GET'])
+def consultarProductoJson():
+    try:
+      datos = request.get_json(force=True)
+      idProducto = int(datos["idProducto"])
+      producto = Products.query.get(idProducto)
+      productoJson = {
+            "idProducto": producto.idProducto,
+            "proNombre":producto.proNombre,
+            "proPrecio":producto.proPrecio,
+            "categoria": {
+                "idCategoria": producto.categoria.idCategoria,
+                "catNombre": producto.categoria.catNombre
+            }
+      }
+      mensaje="Datos del Producto"
+    except exc.SQLAlchemyError as error:
+        mensaje = error
+    return {"mensaje":mensaje, "producto":productoJson}
+
+@app.route('/agregarProductoJson', methods=['POST'])
+def agregarProductoJson():
+    estado = False
+    try:
+        datos = request.get_json(force=True)
+        codigo = int(datos['codigo'])
+        nombre = datos['nombre']
+        precio = int(datos['precio'])
+        categoria = int(datos['categoria'])
+        producto = Products(proCodigo=codigo,proNombre=nombre,
+                            proPrecio=precio,proCategoria=categoria)
+        db.session.add(producto)
+        db.session.commit()
+        mensaje="Producto Agregado Correctamente"
+        estado = True
+    except exc.SQLAlchemyError as error:
+        db.session.rollback()
+        mensaje="Problemas al registrar"
+    return {"mensaje":mensaje,"estado":estado}
+
+@app.route('/eliminarProductoJson', methods=['POST'])
+def eliminarProductoJson():
+    try:
+        estado=False
+        datos = request.get_json(force=True)
+        idproducto = int(datos["idProducto"])
+        producto = Products.query.get(idproducto)
+        db.session.delete(producto)
+        db.session.commit()
+        estado=True
+        mensaje="producto Eliminado"
+        nombreArchivo = str(idproducto)+".jpg"
+        os.remove(os.path.join(app.config["UPLOAD_FOLDER"]+"/"+nombreArchivo))
+    except exc.SQLAlchemyError as error:
+        db.session.rollback()
+        mensaje = "problemas al Elimanr El producto"
+    return {"mensaje":mensaje, "estado":estado}
+
+@app.route('/actualizarProductoJson', methods=['POST'])
+def actualizarProductoJson():
+    try:
+        estado = False
+        datos = request.get_json(force=True)
+        idProducto = int(datos["idProducto"])
+        producto = Products.query.get(idProducto)
+        producto.proCodigo = int(datos["codigo"])
+        producto.proNombre = datos["nombre"]
+        producto.proPrecio = int(datos["precio"])
+        producto.proCategoria = int(datos["categoria"])
+        db.session.commit()
+        estado = True
+        mensaje = " producto Actualizado"
+    except exc.SQLAlchemyError as error:
+        db.rollback()
+        mensaje = "Problemas al actualizar el Producto"
+    return {"mensaje":mensaje,"estado":estado}
