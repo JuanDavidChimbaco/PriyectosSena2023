@@ -3,3 +3,7 @@ cd ProyectosSena2023\Tienda SQLALCHEMY\environment\Scripts>
 activate.bat
 
 deactivate 
+
+pip freeze > requirements.txt para poner las librerias 
+
+pip install -r requirements.txt
