@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+{% block encabezado %}
+    {% include 'encabezado.html' %}
+{% endblock  %}
+{%block contenido %}
+<div class="">
+    <h3>BIENVENIDOS NEGOCIO ADSO</h3>
+    <br>
+    <div class="text-start">
+        <p>Nuestro negocio ofrece productos de diferentes categorias</p>
+    </div>
+</div>
+    {% include 'listarProductos.html' %}
+{% endblock %}
+{%block piePagina%}
+    {%include 'piePagina.html'%}
+{%endblock%}

@@ -16,8 +16,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from appTienda import views
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
+    path('inicio/',views.inicio),
+    path('vistaCategorias/',views.vistaCategorias),
+    path('agregarCategorias/',views.agregarCategorias),
+    path('listarProductos/',views.listarProductos),
+    path('vistaProducto/',views.vistaProducto),
+    path('agregarProducto/',views.agregarProducto),
 ]
+
+# Para poder tener acceso a la carpeta media y poder ver las fotos 
+# de los productos
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root = settings.MEDIA_ROOT
+    )

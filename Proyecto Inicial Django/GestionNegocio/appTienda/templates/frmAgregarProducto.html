@@ -1,0 +1,56 @@
+{% extends 'index.html' %}
+{% block encabezado %}
+    {% include 'encabezado.html' %}
+{% endblock  %}
+{%block contenido %}
+    <div class="w-25 pb-3">
+        <h3 class="text-center bg-danger text-white rounded"> Agregar Productos </h3>
+        <form action="/agregarProducto/" method="post" enctype="multipart/form-data" class="was-validated">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="txtCodigo">Codigo:</label>
+                <input type="number" name="txtCodigo" id="txtCodigo" 
+                value="{{producto.proCodigo}}" required class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="txtNombre">nombre:</label>
+                <input type="text" name="txtNombre" id="txtNombre" 
+                value="{{producto.proNombre}}"required class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="txtPrecio">Precio:</label>
+                <input type="number" name="txtPrecio" id="txtPrecio" 
+                value="{{producto.proPrecio}}"required class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="cbCategoria">Categoria:</label>
+                <select name="cbCategoria" id="cbCategoria" required class="form-control">
+                    <option value="">Selecione Categoria</option>
+                    {% for categoria in listaCategorias %}
+
+                    <option value="{{categoria.id}}">{{categoria.catNombre}}</option>
+
+                {% endfor%}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="fileFoto">Imagenes (jpg)</label>
+                <input type="file" name="fileFoto" id="file_Foto" class="form-control" accept=".jpg">
+            </div>
+            <div class="text-center mt-3">
+                <input type="submit" value="Agregar" class="btn btn-success">
+            </div>
+        </form>
+        <div>
+            {%if mensaje%}
+            <script>
+                Swal.fire('Agregar Producto','{{mensaje}}','info');
+                document.getElementById('cbCategoria').value = `{{producto.proCategoria}}`
+            </script>
+            {%endif%}
+        </div>
+    </div>
+{% endblock %}
+{%block piePagina%}
+    {%include 'piePagina.html'%}
+{%endblock%}
