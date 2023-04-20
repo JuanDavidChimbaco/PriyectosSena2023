@@ -18,20 +18,20 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- Hojas de Estilo local-->
-    {%load static%}
+    {% load static %}
     <link rel="stylesheet" href="{% static '../static/css/app.css'%}">
-
+    <script src="{% static '../static/js/app.js'%}"></script>
+    
     <title>Tienda Django</title>
 </head>
 
 <body>
     <div class="container">
         <header class="">{%block encabezado%}{%endblock %}</header>
-        <section class="d-flex justify-content-center">{%block contenido%}{%include "listarProductos.html" %}{%endblock %}</section>
+        <section class="d-flex justify-content-center">{%block contenido%}{%include "inicio.html" %}{%endblock %}</section>
         <footer class="">{%block piePagina%}{%endblock %}</footer>
     </div>
-    {%load static%}
-    <script src="{% static '../static/js/app.js'%}"></script>
+    
 </body>
 
 </html>

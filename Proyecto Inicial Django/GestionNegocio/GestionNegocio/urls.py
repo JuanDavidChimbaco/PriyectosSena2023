@@ -24,11 +24,15 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('inicio/',views.inicio),
+    path('',views.inicio),
     path('vistaCategorias/',views.vistaCategorias),
     path('agregarCategorias/',views.agregarCategorias),
     path('listarProductos/',views.listarProductos),
     path('vistaProducto/',views.vistaProducto),
     path('agregarProducto/',views.agregarProducto),
+    path('consultarProducto/<int:id>/', views.consultarProducto),
+    path('actualizarProducto/', views.actualizarProducto),
+    path('eliminarProducto/<int:id>/', views.eliminarProducto),
 ]
 
 # Para poder tener acceso a la carpeta media y poder ver las fotos 

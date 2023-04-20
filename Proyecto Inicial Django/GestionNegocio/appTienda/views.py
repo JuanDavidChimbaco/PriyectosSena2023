@@ -37,7 +37,7 @@ def vistaProducto(request):
         mensaje=""
     except Error as error:
         mensaje=f"Problemas al obtener las categorias{error}"
-    retorno = {"mensaje":mensaje, "listaCategorias":categorias, "prodcuto":None}
+    retorno = {"mensaje":mensaje, "listaCategorias":categorias, "producto":None}
     return render(request, "frmAgregarProducto.html", retorno)
 
 def agregarProducto(request):
@@ -69,3 +69,52 @@ def agregarProducto(request):
     retorno = {"mensaje":mensaje, "listaCategorias":categorias, "prodcuto":producto}
     
     return render(request, "frmAgregarProducto.html",retorno)
+
+def consultarProducto(request,id):
+    try:
+        producto = Producto.objects.get(id=id)
+        print(producto.proCategoria_id)
+        listaCategoria = Categoria.objects.all()
+        print(listaCategoria[1].id)
+        mensaje=""
+    except Error as error:
+        mensaje = f"Problemas {error}"
+    retorno = {"mensaje": mensaje, "producto": producto, "listaCategorias": listaCategoria}
+    return render(request, "frmActualizarProducto.html", retorno)
+
+def actualizarProducto(request):
+    try:
+        idProducto = int(request.POST["idProducto"])
+        idCategoria = int(request.POST["cbCategoria"])
+        
+        categoria = Categoria.objects.get(id=idCategoria)
+        
+        producto = Producto.objects.get(id=idProducto)
+        producto.proCodigo = request.POST["txtCodigo"]
+        producto.proNombre = request.POST["txtNombre"]
+        producto.proPrecio = request.POST["txtPrecio"]
+        producto.proCategoria = categoria
+        archivo = request.FILES.get('fileFoto',False)
+        
+        if(archivo!= False):
+            producto.proFoto=archivo
+        producto.save()
+        mensaje = "Producto Actualizado"
+        return redirect("/listarProductos")
+        
+    except Error as error:
+        mensaje = f"provlemas al Actualizar{error}"
+    categorias = Categoria.objects.all()
+    retorno = {"mensaje":mensaje, "listaCategorias": categorias, "producto":producto}
+    return render(request, "listarProductos.html", retorno)
+
+def eliminarProducto(request,id):
+    try:        
+        producto = Producto.objects.get(id=id)
+        producto.delete()
+        mensaje="Producto Eliminado"
+         
+    except Error as error:
+        mensaje=f"Problemas al eliminar producto {error}"
+    retorno = {"mensaje":mensaje,} 
+    return redirect("/listarProductos/", retorno)
