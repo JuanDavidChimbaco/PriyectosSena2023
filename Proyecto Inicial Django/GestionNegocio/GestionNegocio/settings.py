@@ -131,7 +131,9 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Para almacenar archivos multimedia. (FOTOS)
+
 MEDIA_URL = '/media/'
 
 # Para recuperar los archivos multimedia
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

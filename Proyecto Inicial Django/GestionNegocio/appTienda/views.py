@@ -1,6 +1,7 @@
 from django.shortcuts import render , redirect
 from appTienda.models import Categoria, Producto
 from django.db import Error
+import os
 
 # Create your views here.
 
@@ -75,7 +76,6 @@ def consultarProducto(request,id):
         producto = Producto.objects.get(id=id)
         print(producto.proCategoria_id)
         listaCategoria = Categoria.objects.all()
-        print(listaCategoria[1].id)
         mensaje=""
     except Error as error:
         mensaje = f"Problemas {error}"
@@ -111,6 +111,10 @@ def actualizarProducto(request):
 def eliminarProducto(request,id):
     try:        
         producto = Producto.objects.get(id=id)
+        if producto.proFoto:
+            if os.path.exists(producto.proFoto.path):
+                os.remove(producto.proFoto.path)
+            producto.proFoto.delete()
         producto.delete()
         mensaje="Producto Eliminado"
          
