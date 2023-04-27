@@ -1,0 +1,51 @@
+#Crear Entorno virtual 
+C:\Users\Ambiente 209-3\Documents\ProyectosSena2023\ProyectoConstruccion>python -m venv entorno 
+
+#Activar entorno Virtual
+C:\Users\Ambiente 209-3\Documents\ProyectosSena2023\ProyectoConstruccion\entorno\Scripts>activate.bat 
+
+#instalar Django en el entorno virtual
+(entorno) C:\Users\Ambiente 209-3\Documents\ProyectosSena2023\ProyectoConstruccion>pip install django
+
+#instalar librerias para conectar a la base de datos (en este caso mysql)
+(entorno) C:\Users\Ambiente 209-3\Documents\ProyectosSena2023\ProyectoConstruccion>pip install mysqlclient
+
+#crear el proyecto django para iniciar la estructura
+(entorno) C:\Users\Ambiente 209-3\Documents\ProyectosSena2023\ProyectoConstruccion>django-admin startproject GestionInventario
+
+#creamos la la aplicacion en el proyecto
+(entorno) C:\Users\Ambiente 209-3\Documents\ProyectosSena2023\ProyectoConstruccion\GestionInventario>python manage.py startapp appGestionInventario
+
+#definir con que base de datos voy a trabajar en setting.py 
+
+'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'inventarioconstruccion',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306'
+    }
+
+# agregar la aplicacion en el proyecto
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'appGestionInventario', ### esta es la aplicacion que agregamos 
+]
+
+# importamos os para configurar las siguientes carpetas 
+
+# luego agregamos la configuracion de la carpeta static 
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# y agregamos una carpeta media para las fotos
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
