@@ -89,7 +89,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'inventarioconstruccion',
-        'NAME': 'gestioninventario',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',

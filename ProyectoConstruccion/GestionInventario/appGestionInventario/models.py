@@ -1,5 +1,5 @@
 from django.db import models
-
+from datetime import datetime
 # Create your models here.
 tipoProvedores=[
     ('PJ', 'Persona Juridica'),
@@ -84,32 +84,32 @@ class Fichas(models.Model):
         return self.ficNombre
     
 class Elementos(models.Model):
-    eleRadicado = models.CharField(max_length=15, unique=True)
+    eleCodigo = models.CharField(max_length=15, unique=True)
     eleTipo = models.CharField(choices=tipoElemento, max_length=3)
-    eleFechaHoraRegistro = models.DateTimeField(auto_now=False, auto_now_add=False)
+    eleFechaHoraRegistro = models.DateTimeField(auto_now_add=True)
     def __str__(self) -> str:
-        return self.eleRadicado
+        return self.eleCodigo
     
 class Devolutivos(models.Model):
     devPlacaSena = models.CharField(null=True, max_length=50)
     devSerial = models.CharField(null=True, max_length=50)
     devDescripcion = models.CharField(max_length=200)
     devMarca = models.CharField(null=True, max_length=50)
-    devFechaIngresoSena = models.DateField(auto_now=False, auto_now_add=False)
+    devFechaIngresoSena = models.DateField(auto_now_add=True)
     devValor = models.FloatField()
     devEstado = models.CharField(choices=devEstados , max_length=1)
     devFoto = models.CharField(null=True, max_length=50)
     devElemento = models.ForeignKey(Elementos, on_delete=models.DO_NOTHING)
     def __str__(self) -> str:
-        return self.devDescripcion
+        return self.devElemento
     
 class UbicacionFisica(models.Model):
     ubiElemento = models.ForeignKey(Elementos, on_delete=models.DO_NOTHING)
     ubiDeposito = models.IntegerField()
-    ubiEstante = models.IntegerField()
-    ubiEntrepano = models.IntegerField()
+    ubiEstante = models.IntegerField(null=True)
+    ubiEntrepano = models.IntegerField(null=True)
     def __str__(self) -> str:
-        return self.ubiDeposito
+        return f"{self.ubiDeposito} {self.ubiEstante} {self.ubiEntrepano} {self.ubiElemento}" 
     
 class Materiales(models.Model):
     matNombre = models.CharField(max_length=50)
@@ -119,6 +119,16 @@ class Materiales(models.Model):
     matElemento = models.ForeignKey(Elementos, on_delete=models.DO_NOTHING)
     def __str__(self) -> str:
         return self.matNombre
+    
+class EntradaMateriales(models.Model):
+    entNumeroFactura = models.CharField(max_length=15)
+    entPersonaRecibe = models.ForeignKey(Persona, on_delete=models.DO_NOTHING)
+    entFechaHora = models.DateTimeField(default=datetime.now())
+    entEntregadoPor = models.CharField(max_length=100)
+    entObservaciones = models.CharField(max_length=400,null=True)
+    entProveedor = models.ForeignKey(Proveedor, on_delete=models.DO_NOTHING)
+    def __str__(self) -> str:
+        return self.entNumeroFactura
     
 class EstadoMantenimiento(models.Model):
     estNombre = models.CharField(max_length=50, unique=True)
@@ -130,17 +140,7 @@ class Mantenimientos(models.Model):
     manPersona = models.ForeignKey(Persona,on_delete=models.DO_NOTHING)
     manEstado = models.ForeignKey(EstadoMantenimiento, on_delete=models.DO_NOTHING)
     manObservaciones = models.TextField(null=True)
-    manFechaHora = models.DateTimeField(auto_now=False, auto_now_add=False)
-    
-class EntradaMateriales(models.Model):
-    entNumeroFactura = models.CharField(max_length=15)
-    entPersonaRecibe = models.ForeignKey(Persona, on_delete=models.DO_NOTHING)
-    entFechaHora = models.DateTimeField( auto_now=False, auto_now_add=False)
-    entEntregadoPor = models.CharField(max_length=100)
-    entObservaciones = models.CharField(max_length=400,null=True)
-    entProveedor = models.ForeignKey(Proveedor, on_delete=models.DO_NOTHING)
-    def __str__(self) -> str:
-        return self.entNumeroFactura
+    manFechaHora = models.DateTimeField(auto_now_add=True)
     
 class DetalleEntradaMateriales(models.Model):
     detEntradaMaterial = models.ForeignKey(EntradaMateriales, on_delete=models.DO_NOTHING)
@@ -150,11 +150,11 @@ class DetalleEntradaMateriales(models.Model):
     detEstado = models.CharField(choices=detEstados, max_length=1)
     
 class SolicitudElementos(models.Model):
-    solFechaHora = models.DateTimeField(auto_now=False, auto_now_add=False)
     solPersona = models.ForeignKey(Persona, on_delete=models.DO_NOTHING)
     solFicha = models.ForeignKey(Fichas, on_delete=models.DO_NOTHING)
     solProyecto = models.CharField(max_length=500)
-    solEstado = models.CharField(choices=solEstados, max_length=3, default=solEstados[0])
+    solFechaHora = models.DateTimeField(auto_now_add=True)
+    solEstado = models.CharField(choices=solEstados, max_length=3)
     solObservaciones = models.TextField(null=True,default='null')
     def __str__(self) -> str:
         return self.solProyecto
@@ -169,16 +169,16 @@ class DetalleSolicuitudes(models.Model):
 class SalidaDetalleSolicitud(models.Model):
     salDetalleSolicitud = models.ForeignKey(DetalleSolicuitudes, on_delete=models.DO_NOTHING)
     salCantidadEntregada = models.IntegerField()
-    salFechaHora = models.DateTimeField(auto_now=False, auto_now_add=False)
+    salFechaHora = models.DateTimeField(auto_now_add=True)
     salObservaciones = models.CharField(max_length=400, null=True)
     def __str__(self) -> str:
         return self.salCantidadEntregada
     
 class DevolucionElementos(models.Model):
-    devSalida = models.ForeignKey(SalidaDetalleSolicitud, on_delete=models.DO_NOTHING)
+    devSalida = models.ForeignKey(SalidaDetalleSolicitud, on_delete=models.DO_NOTHING) # devDetalleSalida
     devPersona = models.ForeignKey(Persona, on_delete=models.DO_NOTHING)
     devCantidadEntregada = models.IntegerField()
-    devFechaHora = models.DateTimeField(auto_now=False, auto_now_add=False)
+    devFechaHora = models.DateTimeField(auto_now_add=True)
     devObservaciones = models.TextField(null=True)
     def __str__(self) -> str:
         return self.devCantidadEntregada
